@@ -1,0 +1,18 @@
+html
+    head
+        title='Desafio Plantillas - PUG'
+    body
+        div 
+            nav='menu'
+
+        div
+            table(style='width:100%', border='1')
+                tr
+                    th Nombre
+                    th Precio
+                    th Foto
+                tr
+                each datazo in data
+                    td=datazo.name
+                    td=datazo.price
+                    td=datazo.thumbnail
