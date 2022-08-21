@@ -3,12 +3,20 @@ const classProductos = require('./api/classProductos.js')
 const app = express();
 const PORT = 8080;
 app.use(express.urlencoded({extended: true}));
-app.use(express.json());
+
 
 const productosApi = new classProductos();
 
+app.engine('handlebars',
+            handlebars({
+                extname: '.handlebars',
+                defaultLayout: 'index.handlebars',
+                layoutDir: __dirname + '/views/layouts',
+            })
+        );
+
 app.set('views', './views');
-app.set('view engine', 'handlebars'); 
+app.set('view engine', 'handlebars');
 
 app.use(express.static('public'))
 
@@ -18,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.get('/productos', (req, res) => {
     const data = productosApi.listarAll();
-    res.render('main', {data: JSON.stringify(data, null, 2)})
+    res.render('main', {layout: 'index', data: JSON.stringify(data, null, 2)})
 });
 app.post('/productos', (req, res) => {
     const form = req.body;
